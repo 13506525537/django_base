@@ -8,7 +8,7 @@ from django.db import models
 class BookInfo(models.Model):
     # id 默认
     # 属性等于字段
-    name = models.CharField(max_length=32, unique=True)  # 书名
+    name = models.CharField(max_length=32, unique=True,)  # 书名
     pub_date = models.DateField(null=True)  # 出版日期
     readcount = models.IntegerField()  # 阅读数
     commentcount = models.IntegerField()  # 评论数
@@ -26,3 +26,12 @@ class PersonInfo(models.Model):
     # 创建字段
     name = models.CharField(max_length=32)
     gender = models.IntegerField()
+    description = models.CharField(max_length=32)
+    is_delete = models.BooleanField(default=False)
+    book_id = models.ForeignKey(BookInfo, on_delete=models.CASCADE, default="")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'personinfo'  # 修改表的名字
