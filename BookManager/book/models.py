@@ -11,7 +11,7 @@ class BookInfo(models.Model):
     name = models.CharField(max_length=32, unique=True)  # 书名
     pub_date = models.DateField(null=True)  # 出版日期
     readcount = models.IntegerField()  # 阅读数
-    commentcount = models.IntegerField(max_length=10)  # 评论数
+    commentcount = models.IntegerField()  # 评论数
     is_delete = models.BooleanField(default=False)  # 是否删除
 
     def __str__(self):
