@@ -24,8 +24,8 @@ SECRET_KEY = 'django-insecure-+-(xpyo-e@$j0o9_doltgtll@1^cv!1c@vbq2!%t+4qc=!#=j_
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+# 允许访问地址
+ALLOWED_HOSTS = ['172.169.92.139']
 
 
 # Application definition
@@ -75,6 +75,7 @@ WSGI_APPLICATION = 'Helloworld.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# sqlite3 关系型数据库
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -104,10 +105,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
+# 设置语言和时区
+LANGUAGE_CODE = 'zh-Hans'
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai' # 'UTC'
 
 USE_I18N = True
 

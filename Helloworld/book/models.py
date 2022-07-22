@@ -9,6 +9,10 @@ class Book(models.Model):
     # Book有两个属性id name
     name = models.CharField(max_length=10)  # 书名字段
 
+    # 重写str方法以显示书籍名字
+    def __str__(self):
+        return self.name
+
 
 class PeopleInfo(models.Model):
     name = models.CharField(max_length=10)  # 人物名字
@@ -16,3 +20,7 @@ class PeopleInfo(models.Model):
 
     # 外链的表
     book = models.ForeignKey(Book,on_delete=models.CASCADE)
+
+    # 重写人物方法
+    def __str__(self):
+        return self.name
