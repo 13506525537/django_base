@@ -14,4 +14,14 @@ from django.http import HttpRequest
 # 定义好后期望用户输入/index/访问函数
 def index(request):
 
-    return HttpResponse("ok")
+
+    # request, template_name, context = None
+    # request  请求
+    # template_name 模板名字
+    # context = None
+
+    # 模拟数字查询
+    context = {
+        "name": "马上双十一，点击有惊喜"
+    }
+    return render(request, 'book/index.html', context=context)
