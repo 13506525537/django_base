@@ -154,3 +154,28 @@ BookInfo.objects.filter(Q(name__contains='水')|Q(name__contains='梦')).aggrega
 BookInfo.objects.all().order_by('readcount') # 升序
 BookInfo.objects.all().order_by('-readcount') # 降序
 
+######################关联查询############################################
+# 两个表级联操作
+
+# 查询书籍为1的所有人物信息
+book_info = BookInfo.objects.get(id=1)
+# 一对多的关联模型中系统会为我们自动天机一个关联模型小写_set的字段
+# personinfo_set=[PersonInfo,PersonInfo,....]
+book_info.personinfo_set.all()
+
+# 查询诸葛亮是哪本书的
+person = PersonInfo.objects.get(name='诸葛亮')
+person.book.name # person.book是个对象，用对象.属性调用属性
+
+##################关联查询的过滤查询######################
+# 语法形式
+# 查询1的数据，条件为n
+# 模型类名.objects.filter(关联类名小写__字段名__运算符=值)
+
+# 查询图书，要求图书人物为“林黛玉”
+BookInfo.objects.filter(personinfo__name__exact='林黛玉')
+# 查询图书，要求图书中人物的描述包含‘武力型’
+book_list = BookInfo.objects.filter(personinfo__description__contains='武')
+
+# 查询图书阅读量大于30的所有人物
+PersonInfo.objects.filter(book__readcount__gt=30)
