@@ -140,7 +140,7 @@ BookInfo.objects.filter(Q(readcount__gt=7)|Q(id__lt=3))
 # id不等于3的图书
 BookInfo.objects.filter(~Q(id=3))
 """
-
+"""
 ########################聚合函数###############
 
 # Sum,Max,Min,Avg,Count
@@ -179,3 +179,10 @@ book_list = BookInfo.objects.filter(personinfo__description__contains='武')
 
 # 查询图书阅读量大于30的所有人物
 PersonInfo.objects.filter(book__readcount__gt=30)
+"""
+# 查询的特点
+# 1.惰性，只有当用到查询时才会进行查询
+# 2.缓存，查询过一次的数据会暂时先缓存在硬盘中，如果再次使用这个查询集时会使用缓存数据，减少了数据库的查询次数
+
+
+# 分页方式
