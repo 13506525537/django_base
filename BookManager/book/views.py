@@ -50,6 +50,7 @@ book.save()
 # 方式2 # update()一定要用filter(),  get()只能查询用
 BookInfo.objects.filter(id=4).update(name='红楼梦',commentcount=6)
 """
+
 """
 ###############删除数据#############
 # 方式1
@@ -61,6 +62,7 @@ book.delete()
 BookInfo.objects.get(id=5).delete()
 BookInfo.objects.filter(id=5).delete()
 """
+
 """
 ##################查询方式###########
 # get()查询单一结果，如不存在返回DoesNotExits
@@ -111,6 +113,7 @@ BookInfo.objects.filter(pub_date__year=2022)
 BookInfo.objects.filter(pub_date__gt='2022-6-30')
 """
 
+"""
 ###############两个属性的比较：F对象##########
 from django.db.models import F
 
@@ -136,4 +139,18 @@ BookInfo.objects.filter(Q(readcount__gt=7)|Q(id__lt=3))
 # not查询
 # id不等于3的图书
 BookInfo.objects.filter(~Q(id=3))
+"""
+
+########################聚合函数###############
+
+# Sum,Max,Min,Avg,Count
+from django.db.models import Sum,Max,Min,Avg,Count
+from django.db.models import Q
+BookInfo.objects.aggregate(Sum('readcount'))
+BookInfo.objects.filter(Q(name__contains='水')|Q(name__contains='梦')).aggregate(Sum('readcount')
+)
+
+#######################升序降序#######
+BookInfo.objects.all().order_by('readcount') # 升序
+BookInfo.objects.all().order_by('-readcount') # 降序
 
