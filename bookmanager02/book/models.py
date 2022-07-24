@@ -9,6 +9,7 @@ class BookInfo(models.Model):
 
     class Meta:
         db_table = 'bookinfo'  # 修改表名
+        verbose_name= 'bookinfo'
 
     def __str__(self): # 返回对象名
         return self.name
@@ -26,6 +27,7 @@ class PeopleInfo(models.Model):
 
     class Meta:
         db_table = 'peopleinfo'  # 修改表名
+        verbose_name = 'peopleinfo' # 修改admin管理中的名称
 
     def __str__(self): # 返回对象名
         return self.name
