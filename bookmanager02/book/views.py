@@ -102,8 +102,11 @@ def set_cookies(request):
     password = res['password']
     # 2. 服务器设置cookie信息
     response = HttpResponse('set_cookie')
-    response.set_cookie('name', username,max_age=30)
-    response.set_cookie('password', password,max_age=30)
+    response.set_cookie('name', username, max_age=30)
+    # max_age是一个秒数，不设置的话默认为浏览器关闭cookies过期
+    # 删除cookie
+    # request.delete_cookie('name')
+    response.set_cookie('password', password, max_age=30)
     return response
 
 
@@ -113,3 +116,18 @@ def get_cookies(request):
     # request.COOKIES是字典数据
     name = request.COOKIES.get('name')
     return HttpResponse(name)
+
+####################session############
+'''
+1. session 保存在服务器端
+2. session 依赖于cookie
+'''
+# 第一次请求在 服务器端设置session信息
+# 服务器同时生成一个sessionid的cookie信息
+# 浏览器收到信息后会保存好 cookie
+
+# 第二次请求时会携带sessionid，服务器会严重，没问题后会读取相关数据
+
+def set_session(request):
+    return HttpResponse('set_session')
+

@@ -1,7 +1,7 @@
 """
 app 路由表
 """
-from book.views import get_cookies,set_cookies, index, redict, create_book, shop, class_no, register, response, jsonres
+from book.views import set_session,get_cookies,set_cookies, index, redict, create_book, shop, class_no, register, response, jsonres
 from django.urls import path
 
 from django.urls import converters  # 转化器模块，里面可以自己添加
@@ -16,7 +16,8 @@ urlpatterns = [
     path('jsonres/', jsonres),
     path('redict/', redict),
     path('setcookies/', set_cookies),
-    path('getcookies/', get_cookies)
+    path('getcookies/', get_cookies),
+    path('setsession/', set_session)
 
 ]
 
