@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.http import HttpResponse, HttpRequest
@@ -12,7 +12,7 @@ def index(request):
     return render(request, 'index.html')
 
 
-def create_book(request,):
+def create_book(request, ):
     # # 新增一本书籍
     # book = BookInfo.objects.create(
     #     name = '雪山飞狐',
@@ -33,29 +33,83 @@ def shop(request, city_id, shop_id):
     print(order)
     return HttpResponse(f'{city_id}的{shop_id}存在！')
 
-def class_no(request,class_no):
-    query_params = request.GET # 获取name的参数
+
+def class_no(request, class_no):
+    query_params = request.GET  # 获取name的参数
     name = query_params.get('name')
 
     return HttpResponse(f'你好，我是{class_no}班的{name}')
 
+
 def register(request):
-    body_str = request.body.decode() # 获取body后解码，得到字符串
-    body = json.loads(body_str) # 用json.loads转成字典
+    body_str = request.body.decode()  # 获取body后解码，得到字符串
+    body = json.loads(body_str)  # 用json.loads转成字典
     print(body)
     # print(type(body))
     # print(request.META)# 获取请求头
     print(request.META['SERVER_PORT'])
 
-    return render(request,template_name='register.html')
+    return render(request, template_name='register.html')
     # return HttpResponse('ok')
 
-def response(request): # 测试响应
-    response = HttpResponse('res',status=200) # 第一个参数为响应体，第二个为状态码
-    response['name']='itcast' #可以通过这种方式这只响应头
+
+def response(request):  # 测试响应
+    response = HttpResponse('res', status=200)  # 第一个参数为响应体，第二个为状态码
+    response['name'] = 'itcast'  # 可以通过这种方式这只响应头
     return response
     # 1XX 消息
     # 2XX 成功
     # 3XX 重定向
     # 4XX 客户端 404路由有问题
     # 5XX 服务器
+
+
+from django.http import JsonResponse
+
+
+def jsonres(request):
+    # info = {
+    #     'name' : '小李',
+    #     'address': '上海'
+    # }
+    girl_friends = [
+        {
+            'name': '小李',
+            'address': '上海'
+        },
+        {
+            'name': 'rose',
+            'address': '浙江'
+        }
+    ]
+    return JsonResponse(girl_friends, safe=False)
+    # safe 为安全锁
+    # safe = True 表示是字典数据
+    # safe = False 表示可以传输非字典数据
+
+
+def redict(request):  # 重定向
+
+    return redirect('http://www.baidu.com')
+
+
+# 第二次请求之后访问地址会携带cookie信息，来判断用户身份
+
+def set_cookies(request):
+    # 1. 获取查询字符串数据
+    res = request.GET
+    username = res['username']
+    password = res['password']
+    # 2. 服务器设置cookie信息
+    response = HttpResponse('set_cookie')
+    response.set_cookie('name', username,max_age=30)
+    response.set_cookie('password', password,max_age=30)
+    return response
+
+
+def get_cookies(request):
+    # 获取cookie
+    print(request.COOKIES)
+    # request.COOKIES是字典数据
+    name = request.COOKIES.get('name')
+    return HttpResponse(name)
