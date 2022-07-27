@@ -151,3 +151,5 @@ def get_session(request):
     username = request.session.get('username')
     content = '{},{}'.format(user_id, username)
     return HttpResponse(content)
+
+#########################session保存到redis######################
