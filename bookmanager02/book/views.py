@@ -45,6 +45,7 @@ def register(request):
     body_str = request.body.decode()  # 获取body后解码，得到字符串
     body = json.loads(body_str)  # 用json.loads转成字典
     print(body)
+
     # print(type(body))
     # print(request.META)# 获取请求头
     print(request.META['SERVER_PORT'])
@@ -155,10 +156,11 @@ def get_session(request):
     # 如果value是个0，session将在浏览器关闭时过期
     # 如果value为None，那么session将采用系统默认值，默认为两周，可以通过setting中的
     # SESSION_COOKIE_AGE来设置全局默认值
-    request.session.setexpiry(3600)
+    request.session.set_expiry(3600)
 
     content = '{},{}'.format(user_id, username)
     return HttpResponse(content)
+
 
 #########################session保存到redis######################
 # 在setting中设置
@@ -166,3 +168,76 @@ def get_session(request):
 # request.session.clear() 清除所有session的数值,在储存中保留key和value中删除值的部分
 # request.session.flush() 清除session中的数据，保留key，在储存中删除整条数据
 # del request.session['键'] 删除session中指定键及值，在储存中只删除某个键及对应的值
+
+
+##################################类视图#############################
+# 常规在函数中定义
+def login(request):
+    print(request.method)
+    if request.method == 'GET':
+        return HttpResponse('get 逻辑')
+    else:
+        return HttpResponse('post 逻辑')
+
+
+# 类视图定义
+"""
+类视图的定义
+class 类视图名字(View):
+    def get(self,request):
+        return HttpResponse('XXX')
+        
+    def http_method_lower(self,request):
+        return HttpResponse('XXX')
+
+"""
+# 1.继承自View，url路径中必须要加视图函数名
+from django.views import View
+
+
+# 2.定义类,使用小写的get,post来进行区分请求方式
+class LoginView(View):
+
+    def get(self, request):
+        return render(request, 'register.html')
+
+    def post(self, request):
+        # 1.获取
+        userinfo = request.POST
+        username = userinfo.get('username')
+        password = userinfo.get('password')
+
+        request.session['username'] = username
+        request.session['password'] = password
+
+        request.session.set_expiry(60)
+
+        return redirect('/overview/')
+
+
+##############个人中心页面###########
+"""
+我的订单、个人中心页面
+如果登录用户    可以访问
+如果未登录用户   不可以访问跳转到登陆页面
+"""
+
+
+class OrderView(View):
+
+    @staticmethod
+    def is_login(func):
+        def innerfunc(self, request):
+            isLogin = False
+            if request.session.get('username') == 'admin' and request.session.get('password') == '123456':
+                isLogin = True
+                return func(self, request)
+
+            else:
+                return redirect('/login/')
+
+        return innerfunc
+
+    @is_login
+    def get(self, request):
+        return render(request, 'index.html')
