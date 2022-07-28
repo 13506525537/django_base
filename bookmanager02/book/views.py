@@ -149,7 +149,20 @@ def get_session(request):
     # 如果没有session的话以上方法会报异常，可以用get去避免异常，get如果没有查询到返回None
     user_id = request.session.get('user_id')
     username = request.session.get('username')
+
+    # session的有效期
+    # 如果value是个整数，session将在value秒后结束
+    # 如果value是个0，session将在浏览器关闭时过期
+    # 如果value为None，那么session将采用系统默认值，默认为两周，可以通过setting中的
+    # SESSION_COOKIE_AGE来设置全局默认值
+    request.session.setexpiry(3600)
+
     content = '{},{}'.format(user_id, username)
     return HttpResponse(content)
 
 #########################session保存到redis######################
+# 在setting中设置
+# session删除
+# request.session.clear() 清除所有session的数值,在储存中保留key和value中删除值的部分
+# request.session.flush() 清除session中的数据，保留key，在储存中删除整条数据
+# del request.session['键'] 删除session中指定键及值，在储存中只删除某个键及对应的值

@@ -53,7 +53,7 @@ ROOT_URLCONF = 'bookmanager02.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'template')],
+        'DIRS': [os.path.join(BASE_DIR, 'template')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,12 +74,12 @@ WSGI_APPLICATION = 'bookmanager02.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        # 'HOST': '127.0.0.1',
-        'HOST': '172.169.101.223',
+        'HOST': '127.0.0.1',
+        # 'HOST': '172.169.101.223',
         'PORT': 3306,
         'USER': 'root',
-        # 'PASSWORD': '123456',
-        'PASSWORD': 'Qwert1234567',
+        'PASSWORD': '123456',
+        # 'PASSWORD': 'Qwert1234567',
         'NAME': 'book02',
     }
 }
@@ -118,20 +118,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-
 # 缓存地址
 CACHES = {
-    'default': {
+    'default': {  # 配置名
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
-        'OPTIONS':{
-            'CLIENT_CLASS':'django_redis.client.DefaultClient',
-        }
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        # 'OPTIONS': {
+        #     'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        # }
     }
 }
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = 'default'
+SESSION_CACHE_ALIAS = 'default'  # 这个表示用哪个配置
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
