@@ -1,7 +1,7 @@
 """
 app 路由表
 """
-from book.views import OrderView, LoginView, login, get_session, set_session, get_cookies, set_cookies, index, redict, \
+from book.views import IsLogin,OrderView, LoginView, login, get_session, set_session, get_cookies, set_cookies, index, redict, \
     create_book, shop, \
     class_no, register, response, jsonres
 from django.urls import path
@@ -22,5 +22,6 @@ urlpatterns = [
     path('setsession/', set_session),
     path('getsession/', get_session),
     path('login/', LoginView.as_view()),  # 这里要写试图函数的名字
-    path('overview/', OrderView.as_view())
+    path('overview/', OrderView.as_view()),
+    path('islogin/',IsLogin.as_view()),
 ]

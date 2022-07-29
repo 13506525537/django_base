@@ -223,6 +223,7 @@ class LoginView(View):
 """
 
 
+# 使用装饰器进行判断是否登录
 class OrderView(View):
 
     @staticmethod
@@ -231,8 +232,9 @@ class OrderView(View):
             isLogin = False
             if request.session.get('username') == 'admin' and request.session.get('password') == '123456':
                 isLogin = True
-                return func(self, request)
 
+            if isLogin == True:
+                return func(self, request)
             else:
                 return redirect('/login/')
 
@@ -241,3 +243,20 @@ class OrderView(View):
     @is_login
     def get(self, request):
         return render(request, 'index.html')
+
+
+# 使用django自带的判断是否登录的类来进行判断
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+# 判断是否登录，没有登录跳转登录页
+# LoginRequiredMixin 必须放在View前
+# LoginRequiredMixin内部会以用户是否登录admin站点，如果未登录，
+#  跳转accounts/login/路径上
+class IsLogin(LoginRequiredMixin, View):
+
+    def get(self, request):
+        return HttpResponse('ok get')
+
+    def post(self, request):
+        return HttpResponse('ok post')
