@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-from book.middleware import TestMiddlware
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +40,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'book.middleware.TestMiddleware',  # 注册中间件
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    'book.middleware.MiddlewareTest',  # 注册中间件
 ]
 
 ROOT_URLCONF = 'bookmanager02.urls'
@@ -77,12 +76,12 @@ WSGI_APPLICATION = 'bookmanager02.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        # 'HOST': '127.0.0.1',
-        'HOST': '172.169.101.223',
+        'HOST': '127.0.0.1',
+        # 'HOST': '172.169.101.223',
         'PORT': 3306,
         'USER': 'root',
-        # 'PASSWORD': '123456',
-        'PASSWORD': 'Qwert1234567',
+        'PASSWORD': '123456',
+        # 'PASSWORD': 'Qwert1234567',
         'NAME': 'book02',
     }
 }

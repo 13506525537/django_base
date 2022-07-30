@@ -18,7 +18,7 @@ from book.models import BookInfo
 from book.models import PersonInfo
 
 """
-################增加代码####################
+################增加数据####################
 # 方式1
 book = BookInfo(
     name='西厢记',

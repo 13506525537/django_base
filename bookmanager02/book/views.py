@@ -99,11 +99,11 @@ def redict(request):  # 重定向
 def set_cookies(request):
     # 1. 获取查询字符串数据
     res = request.GET
-    username = res['username']
-    password = res['password']
+    username = res.get('username')
+    password = res.get('password')
     # 2. 服务器设置cookie信息
     response = HttpResponse('set_cookie')
-    response.set_cookie('name', username, max_age=30)
+    response.set_cookie('username', username, max_age=30)
     # max_age是一个秒数，不设置的话默认为浏览器关闭cookies过期
     # 删除cookie
     # request.delete_cookie('name')
@@ -115,7 +115,7 @@ def get_cookies(request):
     # 获取cookie
     print(request.COOKIES)
     # request.COOKIES是字典数据
-    name = request.COOKIES.get('name')
+    name = request.COOKIES.get('username')
     return HttpResponse(name)
 
 
@@ -139,8 +139,12 @@ def set_session(request):
     # 假如我们通过模型查询到了用户的信息,session是以字典形式保存信息
     # 在实现session时顺便实现了cookie
     user_id = 1
-    request.session['user_id'] = user_id
-    request.session['username'] = username
+    try:
+        request.session['user_id'] = user_id
+        request.session['username'] = username
+    except Exception as e:
+        print(e)
+        print('ERROR: session设置失败')
     return HttpResponse('set_session')
 
 
@@ -156,7 +160,7 @@ def get_session(request):
     # 如果value是个0，session将在浏览器关闭时过期
     # 如果value为None，那么session将采用系统默认值，默认为两周，可以通过setting中的
     # SESSION_COOKIE_AGE来设置全局默认值
-    request.session.set_expiry(3600)
+    request.session.set_expiry(60)
 
     content = '{},{}'.format(user_id, username)
     return HttpResponse(content)
@@ -223,17 +227,17 @@ class LoginView(View):
 """
 
 
-# 使用装饰器进行判断是否登录
+# 第一种  使用装饰器进行判断是否登录
 class OrderView(View):
 
     @staticmethod
     def is_login(func):
         def innerfunc(self, request):
-            isLogin = False
+            is_login = False
             if request.session.get('username') == 'admin' and request.session.get('password') == '123456':
-                isLogin = True
+                is_login = True
 
-            if isLogin == True:
+            if is_login:
                 return func(self, request)
             else:
                 return redirect('/login/')
@@ -245,9 +249,8 @@ class OrderView(View):
         return render(request, 'index.html')
 
 
-# 使用django自带的判断是否登录的类来进行判断
+# 第二种  使用django自带的判断是否登录的类来进行判断
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 
 # 判断是否登录，没有登录跳转登录页
 # LoginRequiredMixin 必须放在View前
@@ -260,3 +263,5 @@ class IsLogin(LoginRequiredMixin, View):
 
     def post(self, request):
         return HttpResponse('ok post')
+
+# 第三种  使用中间件进行判断
