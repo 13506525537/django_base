@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id='app'>
+        <ul>
+            <!-- v-for='变量名' in '列表名' :key='字典中的key'-->
+            <!-- <li v-for="item in shops" v-bind:key="item.message">{{item.message}}</li> -->
+           
+            <!-- 添加列表前的序号,第二位都会是索引 -->
+            <!-- <li v-for="(item,index) in shops" :key="item.message">第{{index+1}}家店: {{item.message}}</li> -->
+            
+            <!-- for循环显示对象 -->
+            <!-- for循环第一个变量为值，第二个为key，第三个为index -->
+            <!-- <li v-for="(value,name) in object">{{name}} : {{value}}</li> -->
+            <li v-for="(value,name,index) in object">{{index}} {{name}}:{{value}}</li>
+        
+        </ul>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        // delimiters: ['[[',']]'], // 修改分割符
+        data: {
+            shops:[
+                {message:'北京'},
+                {message:'广州'},
+                {message:'上海'},
+                {message:'铁岭'},
+
+            ],    
+            object: {
+                title: "How to do Lists in Vue",
+                author: 'Jane Doc',
+                published: '2016-04-10',
+            }
+        }
+    })
+</script>
+
+</html>
