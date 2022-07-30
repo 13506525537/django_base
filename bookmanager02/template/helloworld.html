@@ -19,6 +19,8 @@
         <!-- 这里写 html 的相关内容 -->
         {{message}} 
         <!-- message是vue中的message  {{  }} 语法形式，胡子语法 -->
+        <br>
+        <a href="https://www.baidu.com">{{info}}</a>
       </div>
 </body>
 
@@ -33,7 +35,8 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'hello Vue!'
+            message: 'hello Vue!',
+            info: '这是百度'
         }
     })
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id='app'>
+        [[message]]
+        <hr>
+
+        <!-- v-bind vue的标志，用于给标签绑定元素中的属性, 不需要使用[[]], v-bind: 可进行简写, :href -->
+        <a v-bind:href='next'>点击有惊喜</a>
+
+        <!-- v-if 和 v-else 的标签必须挨着才会生效 -->
+        <a href="#" v-if="isLogin">个人中心 </a>
+        <a href="#" v-else="">请登录</a>
+        &nbsp;
+        <!-- v-else-if 跟在v-if 后面 在else 前面 -->
+        <a href="#" v-if="level === 1">皇帝</a>
+        <a href="#" v-else-if="level === 2">宰相</a>
+        <a href="#" v-else-if="level === 3">翰林</a>
+        <a href="#" v-else-if="level === 4">县令</a>
+        <a href="#" v-else>平民</a>
+
+        <!-- v-show效果和v-if是一样的
+             区别：1.v-show是没有else的 
+                    2.v-show标记的元素不显示时也是存在的，使用display:None隐藏可以被获取,if 隐藏时元素不存在 
+        -->
+        <span v-if="seen">if</span>
+        <span v-show="seen">show</span>
+
+    </div>
+    
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        delimiters: ['[[',']]'], // 修改分割符
+        data: {
+            message: '你好',
+            next: 'http://www.bilibili.com',
+            isLogin: true,
+            level: 3,
+            seen: false
+
+        }
+    })
+</script>
+
+</html>

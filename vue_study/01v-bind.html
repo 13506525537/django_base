@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id='app'>
+        [[message]]
+        <hr>
+
+        <!-- v-bind vue的标志，用于给标签绑定元素中的属性, 不需要使用[[]], v-bind: 可进行简写, :href -->
+        <a v-bind:href='next'>点击有惊喜</a>  
+    </div>
+    
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        delimiters: ['[[',']]'], // 修改分割符
+        data: {
+            message: '你好',
+            next: 'http://www.bilibili.com'
+        }
+    })
+</script>
+
+</html>
