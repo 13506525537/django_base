@@ -81,6 +81,30 @@
             }
         }
     })
+
+    function sayHi(name) {
+        console.log(name)
+    }
+    // 箭头函数
+    // 无参数无返回值
+    var say = () => {
+        //函数体
+        alert('abc')
+    }
+    say()
+
+    //有参数，无返回值
+    var eat = food =>{
+        alert('我喜欢吃'+ food)
+    }
+    eat('香蕉')
+
+    //有参数，有返回值
+    var total = (num1,num2) => {
+        return num1+num2
+    }
+
+    alert(total(1,3))
 </script>
 
 </html>
