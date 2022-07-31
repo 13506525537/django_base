@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>练习</title>
+    <!-- 能通过输入框进行列表添加 -->
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<body>
+    <div id="app">
+        <input type="text" v-model="name" placeholder="请输入您需要添加的内容">
+        <button v-on:click="add" >添加</button>
+        <button @click="del">删除</button>
+        <hr>
+        <ul>
+            <li v-for="(item,index) in events" :key="item.id" >{{index+1}} . {{item}} </li>
+        </ul>
+    </div>
+</body>
+<script>
+    var app= new Vue({
+        el: "#app",
+        data: {
+            name: "", //输入列表名
+            events: [],
+        },
+        methods: {
+            add: function(){
+                if (this.name != ""){
+                    this.events.push(this.name);
+                    this.name=""
+                }
+
+            },
+            del: function(){
+                //遍历列表，寻找到vlue相等的值
+                this.events.some((item,index) => {
+                    //获取index
+                    if (item == this.name){
+                        this.events.splice(index,1);
+                    }
+                });
+                this.name=""
+            }
+        }
+    })
+</script>
+</html>

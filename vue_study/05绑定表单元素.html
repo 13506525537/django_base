@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绑定表单元素</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        {{message}}
+        <table border="2px">
+            <tr>
+                <td>用户名</td>
+                <td><input type="text" name="username" v-model="username"></td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td><input type="password" name="password" v-model="password"></td>
+            </tr>
+             <tr>
+                <td>确认密码</td>
+                <td><input type="password" name="confirpassword" v-model="confirpassword"></td>
+            </tr>
+            <tr>
+                <td>性别</td>
+                <td>
+                    <input type="radio" name="gender" value="男" v-model="gender">男
+                    <input type="radio" name="gender" value="女" v-model="gender">女
+                </td>
+            </tr>
+            <tr>
+                <td>爱好</td>
+                <td>
+                    <input type="checkbox" name="hobit" value="basketball" v-model="hobit">篮球
+                    <input type="checkbox" name="hobit" value="football" v-model="hobit">足球
+                    <input type="checkbox" name="hobit" value="pingpong" v-model="hobit">乒乓球
+                </td>
+            </tr>
+            <tr>
+                <td>城市</td>
+                <td>
+                    <select name="city" id="city" v-model="city">
+                        <option value="0">北京</option>
+                        <option value="1">上海</option>
+                        <option value="2">广州</option>
+                        <option value="3">深圳</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>个人简介</td>
+                <td>
+                    <textarea name="info" id="info" cols="22" rows="2.5" v-model="info"></textarea>
+                </td>
+            </tr>
+        </table>
+        <button @click="register">注册</button>
+    </div>
+    
+</body>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data:{
+            message: '表单提交',
+            username: '',  //用户名
+            password: '',  //密码
+            confirpassword: "",  //确认密码
+            gender:'',  //性别 //必须要value
+            city:'',  //城市
+            hobit: [],  //爱好
+            info: '',  //备注
+        },
+        methods:{
+            register:function(){
+                alert(this.username+'注册!');
+                console.log(this.username,this.password,this.confirpassword,this.gender,this.hobit,this.city,this.info)
+            }
+        }
+    })
+</script>
+
+</html>
